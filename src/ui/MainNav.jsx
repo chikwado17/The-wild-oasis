@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   HiHome,
   HiCalendar,
-  HiOutlineHome,
+  HiOfficeBuilding,
   HiUsers,
   HiOutlineCog,
 } from "react-icons/hi";
@@ -71,7 +71,7 @@ function MainNav() {
         </li>
         <li>
           <StyledNavLink to="/cabins">
-            <HiOutlineHome />
+            <HiOfficeBuilding />
             <span>Cabins</span>
           </StyledNavLink>
         </li>
