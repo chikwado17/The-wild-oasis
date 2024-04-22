@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import { useCreateCabin } from "./useCreateCabin";
 
 const FormRow = styled.div`
   display: grid;
@@ -51,31 +52,17 @@ function CreateCabinForm({ setShowForm }) {
   //getting error messages from form state
   const { errors } = formState;
 
-  //calling our query function
-  const queryclient = useQueryClient();
-
-  const { isLoading: isCreating, mutate } = useMutation({
-    mutationFn: (newCabin) => createCabin(newCabin),
-    onSuccess: () => {
-      toast.success("New cabin was successfully created");
-
-      //using the query function here
-      queryclient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-
-      //function to reset the form input
-      reset();
-      setShowForm((show) => !show);
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  //from custom hooks
+  const { isCreating, mutate } = useCreateCabin();
 
   const onSubmit = (data) => {
     //uploading all input fields along side the image upload
-    mutate({ ...data, image: data.image[0] });
+    mutate(
+      { ...data, image: data.image[0] },
+      {
+        onSuccess: () => reset(),
+      }
+    );
   };
 
   return (

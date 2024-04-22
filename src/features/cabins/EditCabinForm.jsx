@@ -9,6 +9,7 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 import { editCabin } from "../../services/apiCabins";
+import { useEditCabin } from "./useEditCabin";
 
 const FormRow = styled.div`
   display: grid;
@@ -59,32 +60,19 @@ function EditCabinForm({ cabin = {} }) {
   //getting error messages from form state
   const { errors } = formState;
 
-  //calling our query function
-  const queryclient = useQueryClient();
-
-  const { isLoading: isEditing, mutate } = useMutation({
-    mutationFn: ({ newCabinData, id }) => editCabin(newCabinData, id),
-    onSuccess: () => {
-      toast.success("Edit on cabin was successfully created");
-
-      //using the query function here
-      queryclient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-
-      //function to reset the form input
-      reset();
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  //from useEdit cabin react query separated hook
+  const { isEditing, mutate } = useEditCabin();
 
   const onSubmit = (data) => {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     //uploading all input fields along side the image upload for editing
-    mutate({ newCabinData: { ...data, image }, id: editId });
+    mutate(
+      { newCabinData: { ...data, image }, id: editId },
+      {
+        onSuccess: () => reset(),
+      }
+    );
   };
 
   return (
@@ -160,7 +148,6 @@ function EditCabinForm({ cabin = {} }) {
         <Label htmlFor="description">Description for website</Label>
         <Textarea
           type="number"
-          disabled={isEditing}
           id="description"
           {...register("description", {
             required: "This field is required",
