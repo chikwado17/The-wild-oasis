@@ -13,7 +13,7 @@ import AppLayout from "./ui/AppLayout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 
-//tanstack querry config settings
+//tanstack query config settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

@@ -21,5 +21,5 @@ export const useEditCabin = () => {
     },
   });
 
-  return { isEditing, mutate };
+  return { isEditing, mutate, editCabin };
 };

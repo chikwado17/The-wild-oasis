@@ -4,6 +4,7 @@ import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabins } from "./useCabins";
+import Menus from "../../ui/Menus";
 
 const sizes = {
   mobileS: "320px",
@@ -61,19 +62,21 @@ const CabinTable = () => {
   }
 
   return (
-    <Table role="table">
-      <TableHeader role="row">
-        <div>Photo</div>
-        <div>Cabin</div>
-        <div>Capacity</div>
-        <div>Price</div>
-        <div>Discount</div>
-        <div>Action</div>
-      </TableHeader>
-      {cabins.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin.id} />
-      ))}
-    </Table>
+    <Menus>
+      <Table role="table">
+        <TableHeader role="row">
+          <div>Photo</div>
+          <div>Cabin</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div>Action</div>
+        </TableHeader>
+        {cabins.map((cabin) => (
+          <CabinRow cabin={cabin} key={cabin.id} />
+        ))}
+      </Table>
+    </Menus>
   );
 };
 

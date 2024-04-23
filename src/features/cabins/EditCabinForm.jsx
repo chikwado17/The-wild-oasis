@@ -47,7 +47,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function EditCabinForm({ cabin = {} }) {
+function EditCabinForm({ cabin = {}, onCloseModal }) {
   //Destructuring the values of cabin that came as a probs from cabin row component
   const { id: editId, ...cabinValues } = cabin;
   const isEditSession = Boolean(editId);
@@ -70,7 +70,10 @@ function EditCabinForm({ cabin = {} }) {
     mutate(
       { newCabinData: { ...data, image }, id: editId },
       {
-        onSuccess: () => reset(),
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
       }
     );
   };
@@ -174,7 +177,7 @@ function EditCabinForm({ cabin = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" onClick={() => onCloseModal?.()}>
           Cancel
         </Button>
         <Button disabled={isEditing}>

@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { formatCurrency } from "./../../utils/helpers";
-import { useState } from "react";
-import EditCabinForm from "./EditCabinForm";
 import { useCreateCabin } from "./useCreateCabin";
 import { useDeleteCabin } from "./useDeleteCabin";
-import { HiPencil, HiTrash } from "react-icons/hi";
-import { HiSquare2Stack } from "react-icons/hi2";
+import { HiDocumentDuplicate } from "react-icons/hi";
+import EditCabin from "./EditCabin";
+import ConfirmDeleteCabin from "./ConfirmDeleteCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -46,9 +45,32 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-const CabinRow = ({ cabin }) => {
-  const [showForm, setShowForm] = useState(false);
+const StyledButton = styled.button`
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.4rem;
+  transition: all 0.2s;
 
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+
+  &:hover {
+    background-color: var(--color-grey-50);
+  }
+
+  & svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--color-grey-400);
+    transition: all 0.3s;
+  }
+`;
+
+const CabinRow = ({ cabin }) => {
   const {
     id: cabinId,
     name,
@@ -91,19 +113,17 @@ const CabinRow = ({ cabin }) => {
         )}
 
         <div>
-          <button disabled={isCreating} onClick={handleDuplicateCabin}>
-            <HiSquare2Stack />
-          </button>
-          <button onClick={() => setShowForm((show) => !show)}>
-            <HiPencil />
-          </button>
-          <button disabled={isDeleting} onClick={() => mutate(cabinId)}>
-            <HiTrash />
-          </button>
+          <StyledButton disabled={isCreating} onClick={handleDuplicateCabin}>
+            <HiDocumentDuplicate /> Duplicate
+          </StyledButton>
+          <EditCabin cabin={cabin} />
+          <ConfirmDeleteCabin
+            cabinId={cabinId}
+            isDeleting={isDeleting}
+            mutate={mutate}
+          />
         </div>
       </TableRow>
-
-      {showForm && <EditCabinForm cabin={cabin} />}
     </>
   );
 };

@@ -5,9 +5,6 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
 import { useCreateCabin } from "./useCreateCabin";
 
 const FormRow = styled.div`
@@ -46,7 +43,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ setShowForm }) {
+function CreateCabinForm({ onCloseModal }) {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
 
   //getting error messages from form state
@@ -60,13 +57,19 @@ function CreateCabinForm({ setShowForm }) {
     mutate(
       { ...data, image: data.image[0] },
       {
-        onSuccess: () => reset(),
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
       }
     );
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input
@@ -164,7 +167,11 @@ function CreateCabinForm({ setShowForm }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          onClick={() => onCloseModal?.()}
+          type="reset"
+        >
           Cancel
         </Button>
         <Button disabled={isCreating}>Create new cabin</Button>
