@@ -45,8 +45,7 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-const StyledButton = styled.button`
-  width: 100%;
+const StyledButton = styled.div`
   text-align: left;
   background: none;
   border: none;
@@ -57,10 +56,6 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   gap: 1.6rem;
-
-  &:hover {
-    background-color: var(--color-grey-50);
-  }
 
   & svg {
     width: 1.6rem;
@@ -112,17 +107,17 @@ const CabinRow = ({ cabin }) => {
           <span>&mdash;</span>
         )}
 
-        <div>
-          <StyledButton disabled={isCreating} onClick={handleDuplicateCabin}>
-            <HiDocumentDuplicate /> Duplicate
-          </StyledButton>
+        <StyledButton>
+          <button disabled={isCreating} onClick={handleDuplicateCabin}>
+            <HiDocumentDuplicate />
+          </button>
           <EditCabin cabin={cabin} />
           <ConfirmDeleteCabin
             cabinId={cabinId}
             isDeleting={isDeleting}
             mutate={mutate}
           />
-        </div>
+        </StyledButton>
       </TableRow>
     </>
   );
