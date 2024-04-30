@@ -39,7 +39,7 @@ const Filter = () => {
   //router hooks to store variables on the router (browsers url)
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const active = searchParams.get("discount");
+  const active = searchParams.get("discount") || "all";
 
   const handleClick = (value) => {
     searchParams.set("discount", value);
