@@ -4,6 +4,7 @@ import Menus from "../../ui/Menus";
 import { useBookings } from "./useBookings";
 import Spinner from "../../ui/Spinner";
 import Empty from "../../ui/Empty";
+import Pagination from "../../ui/Pagination";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -29,8 +30,20 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
+const TableFooter = styled.footer`
+  background-color: var(--color-grey-50);
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
+
+  /* This will hide the footer when it contains no child elements. Possible thanks to the parent selector :has 🎉 */
+  &:not(:has(*)) {
+    display: none;
+  }
+`;
+
 function BookingTable() {
-  const { data: bookings, isLoading } = useBookings();
+  const { bookings, isLoading, count } = useBookings();
 
   if (isLoading) {
     return <Spinner />;
@@ -55,6 +68,9 @@ function BookingTable() {
         {bookings.map((booking) => (
           <BookingRow key={booking.id} booking={booking} />
         ))}
+        <TableFooter>
+          <Pagination count={count} />
+        </TableFooter>
       </Table>
     </Menus>
   );
