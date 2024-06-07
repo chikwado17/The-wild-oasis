@@ -17,8 +17,8 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
   display: grid;
-  grid-template-columns: 0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem;
-  column-gap: 2.4rem;
+  grid-template-columns: 0.6fr 2fr 2.4fr 2fr 2fr 2fr;
+  column-gap: 2rem;
   align-items: center;
 
   background-color: var(--color-grey-50);
@@ -62,6 +62,7 @@ function BookingTable() {
           <div>Dates</div>
           <div>Status</div>
           <div>Amount</div>
+          <div>Actions</div>
           <div></div>
         </TableHeader>
 

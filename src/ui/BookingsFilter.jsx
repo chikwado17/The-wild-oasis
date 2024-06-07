@@ -11,12 +11,14 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `;
 
-const FilterButton = styled.button`
+const FilterButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => !["isActive"].includes(prop),
+})`
   background-color: var(--color-grey-0);
   border: none;
 
   ${(props) =>
-    props.active &&
+    props.isActive &&
     css`
       background-color: var(--color-brand-600);
       color: var(--color-brand-50);
@@ -25,7 +27,6 @@ const FilterButton = styled.button`
   border-radius: var(--border-radius-sm);
   font-weight: 500;
   font-size: 1.4rem;
-  /* To give the same height as select */
   padding: 0.44rem 0.8rem;
   transition: all 0.3s;
 
@@ -49,14 +50,14 @@ const Filter = ({ filterField }) => {
   return (
     <StyledFilter>
       <FilterButton
-        active={active === "all"}
+        isActive={active === "all"}
         disabled={active === "all"}
         onClick={() => handleClick("all")}
       >
         All
       </FilterButton>
       <FilterButton
-        active={active === "checked-out"}
+        isActive={active === "checked-out"}
         disabled={active === "checked-out"}
         onClick={() => handleClick("checked-out")}
       >
@@ -64,14 +65,14 @@ const Filter = ({ filterField }) => {
       </FilterButton>
       <FilterButton
         disabled={active === "checked-in"}
-        active={active === "checked-in"}
+        isActive={active === "checked-in"}
         onClick={() => handleClick("checked-in")}
       >
         Checked in
       </FilterButton>
       <FilterButton
         disabled={active === "unconfirmed"}
-        active={active === "unconfirmed"}
+        isActive={active === "unconfirmed"}
         onClick={() => handleClick("unconfirmed")}
       >
         Unconfirmed

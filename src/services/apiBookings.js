@@ -15,7 +15,7 @@ import supabase from "./supabase";
 //   return data;
 // }
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 export async function getBookings({ filter, sortBy, page }) {
   let query = supabase

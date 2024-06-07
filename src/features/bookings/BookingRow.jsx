@@ -5,10 +5,12 @@ import Tag from "../../ui/Tag";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
+import { HiArrowSmDown, HiEye } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem;
+  grid-template-columns: 0.6fr 2fr 2.4fr 2fr 2fr 2fr;
   column-gap: 2.4rem;
   align-items: center;
   padding: 1.4rem 2.4rem;
@@ -24,7 +26,25 @@ const Cabin = styled.div`
   color: var(--color-grey-600);
   font-family: "Sono";
 `;
+const StyledButton = styled.div`
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.4rem;
+  transition: all 0.2s;
 
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+
+  & svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--color-grey-400);
+    transition: all 0.3s;
+  }
+`;
 const Stacked = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,6 +85,8 @@ function BookingRow({
     "checked-out": "silver",
   };
 
+  const navigate = useNavigate();
+
   return (
     <TableRow>
       <Cabin>{cabinName}</Cabin>
@@ -90,6 +112,16 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
+
+      <StyledButton>
+        <button
+          onClick={() => {
+            navigate(`/bookings/${bookingId}`);
+          }}
+        >
+          <HiEye />
+        </button>
+      </StyledButton>
     </TableRow>
   );
 }
