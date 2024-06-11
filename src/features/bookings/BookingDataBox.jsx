@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
-import {
-  HiOutlineChatBubbleBottomCenterText,
-  HiOutlineCheckCircle,
-  HiOutlineCurrencyDollar,
-  HiOutlineHomeModern,
-} from "react-icons/hi2";
 
 import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
 
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+import {
+  HiOutlineCake,
+  HiOutlineChatAlt,
+  HiOutlineCurrencyPound,
+  HiOutlineHome,
+} from "react-icons/hi";
 
 const StyledBookingDataBox = styled.section`
   /* Box */
@@ -68,7 +68,9 @@ const Guest = styled.div`
   }
 `;
 
-const Price = styled.div`
+const Price = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["isPaid"].includes(prop),
+})`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -123,7 +125,7 @@ function BookingDataBox({ booking }) {
     <StyledBookingDataBox>
       <Header>
         <div>
-          <HiOutlineHomeModern />
+          <HiOutlineHome />
           <p>
             {numNights} nights in Cabin <span>{cabinName}</span>
           </p>
@@ -151,20 +153,17 @@ function BookingDataBox({ booking }) {
         </Guest>
 
         {observations && (
-          <DataItem
-            icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Observations"
-          >
+          <DataItem icon={<HiOutlineChatAlt />} label="Observations">
             {observations}
           </DataItem>
         )}
 
-        <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
+        <DataItem icon={<HiOutlineCake />} label="Breakfast included?">
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
         <Price isPaid={isPaid}>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
+          <DataItem icon={<HiOutlineCurrencyPound />} label={`Total price`}>
             {formatCurrency(totalPrice)}
 
             {hasBreakfast &&

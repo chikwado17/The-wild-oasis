@@ -104,13 +104,6 @@ function CheckinBooking() {
           id="confirm"
         >
           I confirm that {guests.fullName} has paid the total amount of
-          {/* {!addBreakFast
-            ? formatCurrency(totalPrice)
-            : `${formatCurrency(
-                total + optionalBreakFastPrice
-              )} (${formatCurrency(totalPrice)} + ${formatCurrency(
-                optionalBreakFastPrice
-              )} `} */}
           {!addBreakFast
             ? formatCurrency(totalPrice)
             : `${formatCurrency(
@@ -125,6 +118,7 @@ function CheckinBooking() {
         <Button disabled={!confirmPaid || isCheckingin} onClick={handleCheckin}>
           Check in booking #{bookingId}
         </Button>
+
         <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>
